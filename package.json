@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/WangJingxuan0216/telegram-bot#readme",
   "dependencies": {
-    "mongodb": "^2.1.16",
+    "mongodb": "~2.1.16",
+    "kerberos": "~0.0.17",
     "node-telegram-bot-api": "0.20.1"
   }
 }

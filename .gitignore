@@ -1,0 +1,5 @@
+#file saving token and admin id data
+key.json
+
+# node modules
+node_modules/
