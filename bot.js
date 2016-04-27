@@ -14,4 +14,7 @@ console.log("bot server started...");
 bot.onText(/^\/hello (.+)$/, response.hello);
 
 //saving password for user
-bot.onText(/^\/pw (.+)$/, response.password);
+bot.onText(/^\/pw (.+)$/, response.passwordSaving);
+
+//retrieving password for user 
+bot.onText(/^\/pwget (.+)$/, response.passwordRetrieving);
