@@ -1,4 +1,5 @@
 var util = require('./util');
+var fs = require('fs');
 
 var commandList = "/pw(for saving password)\n/pwget(for retrieving password)\n/pwcg(for changing password)"
 
@@ -103,6 +104,22 @@ module.exports = {
 			bot.sendMessage(chatId, response);
 		}else{
 			bot.sendMessage(chatId, "Hello Stranger, this function is only available to my lord")
+		};
+	},
+
+	//sending photo to master1
+	sendingPhoto: function(msg) {
+		var chatId = msg.chat.id;
+		if (admin[0] == chatId){
+			console.log("sending photo");
+			var path = '/mnt/Media/Photos';
+			var file_list = fs.readdirSync(path);
+			var max = file_list.length;
+			var number = Math.floor(Math.random()*max) + 1;
+			var photo = path+'/'+file_list[number];
+			bot.sendPhoto(admin[0], photo);
+		}else{
+			bot.sendMessage(chatId, "Hello Stranger, this function hasn't opened to you");
 		};
 	}
 };

@@ -32,33 +32,6 @@ bot.on('message', function(msg){
 		bot.onText(/^\/pwcg (.+)$/, response.passwordUpdating);
 
 		//sending photos to user
-		bot.onText(/^\/photo (.+)$/, function(msg){
-			var chatId = msg.chat.id;
-			if (admin[0] == chatId){
-				console.log("sending photo");
-				var path = '/mnt/Media/Photos';
-				var file_list = fs.readdirSync(path);
-				var max = file_list.length;
-				var number = Math.floor(Math.random()*max) + 1;
-				var photo = path+'/'+file_list[number];
-				bot.sendPhoto(admin[0], photo);
-			}else{
-				bot.sendMessage(chatId, "Hello Stranger, this function hasn't opened to you");
-			}
-		});
+		bot.onText(/^\/photo (.+)$/, response.sendingPhoto);
 	};
-});
-
-
-
-// // sending photos at scheduled time
-var morningNewsTime = "*/15 30 14 * * *"
-var sendingPhotos = schedule.scheduleJob(morningNewsTime, function() {
-	console.log("Happy Time");
-	var path = '/mnt/Media/Photos';
-	var file_list = fs.readdirSync(path);
-	var max = file_list.length;
-	var number = Math.floor(Math.random()*max) + 1;
-	var photo = path+'/'+file_list[number];
-	bot.sendPhoto(admin[0], photo);
 });
