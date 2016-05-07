@@ -95,7 +95,7 @@ module.exports = {
 		if (admin.indexOf(chatId) >= 0){
 			var filePath = "/home/pi/Media/Photos/lubei";
 			if (admin.indexOf(chatId) == 0){
-				filePath = "/home/pi/Media/Photos/jingxuan";
+				filePath = "/mnt/Media/Photos";
 			}
 			console.log("saving photo...")
 			bot.downloadFile(fileId, filePath);

@@ -16,7 +16,7 @@ console.log("bot server started...");
 bot.on('message', function(msg){
 	if ("photo" in msg){
 		// saving photo
-		response.savingPhoto(msg)
+		response.savingPhoto(msg);
 	}
 	else{
 		//say hello to user
@@ -25,17 +25,40 @@ bot.on('message', function(msg){
 		//saving password for user
 		bot.onText(/^\/pw (.+)$/, response.passwordSaving);
 
-		//retrieving password for user 
+		//retrieving password to user 
 		bot.onText(/^\/pwget (.+)$/, response.passwordRetrieving);
 
 		//updating password for user 
 		bot.onText(/^\/pwcg (.+)$/, response.passwordUpdating);
+
+		//sending photos to user
+		bot.onText(/^\/photo (.+)$/, function(msg){
+			var chatId = msg.chat.id;
+			if (admin[0] == chatId){
+				console.log("sending photo");
+				var path = '/mnt/Media/Photos';
+				var file_list = fs.readdirSync(path);
+				var max = file_list.length;
+				var number = Math.floor(Math.random()*max) + 1;
+				var photo = path+'/'+file_list[number];
+				bot.sendPhoto(admin[0], photo);
+			}else{
+				bot.sendMessage(chatId, "Hello Stranger, this function hasn't opened to you");
+			}
+		});
 	};
 });
 
-// sending news at scheduled time
-var morningNewsTime = "0 7 17 * * *"
-var sendingNews = schedule.scheduleJob(morningNewsTime, function() {
-	console.log("News Time");
-	bot.sendMessage(admin[0], "testing");
+
+
+// // sending photos at scheduled time
+var morningNewsTime = "*/15 30 14 * * *"
+var sendingPhotos = schedule.scheduleJob(morningNewsTime, function() {
+	console.log("Happy Time");
+	var path = '/mnt/Media/Photos';
+	var file_list = fs.readdirSync(path);
+	var max = file_list.length;
+	var number = Math.floor(Math.random()*max) + 1;
+	var photo = path+'/'+file_list[number];
+	bot.sendPhoto(admin[0], photo);
 });
