@@ -1,5 +1,6 @@
-var util = require('./util');
-var fs = require('fs');
+const util = require('./util');
+const fs = require('fs');
+const exec = require('child_process').exec;
 
 var commandList = "/pw(for saving password)\n/pwget(for retrieving password)\n/pwcg(for changing password)"
 
@@ -110,16 +111,44 @@ module.exports = {
 	//sending photo to master1
 	sendingPhoto: function(msg) {
 		var chatId = msg.chat.id;
-		if (admin[0] == chatId){
+		if (my_lord == chatId){
 			console.log("sending photo");
 			var path = '/mnt/Media/Photos';
 			var file_list = fs.readdirSync(path);
 			var max = file_list.length;
 			var number = Math.floor(Math.random()*max) + 1;
 			var photo = path+'/'+file_list[number];
-			bot.sendPhoto(admin[0], photo);
+			bot.sendPhoto(my_lord, photo);
 		}else{
 			bot.sendMessage(chatId, "Hello Stranger, this function hasn't opened to you");
+		};
+	},
+
+	//sending drama update info
+	sendingDramaUpdate: function(msg) {
+		var chatId = msg.chat.id;
+		if (admin.indexOf(chatId) >= 0){
+			console.log("crawling the webpage");
+			const dramaInfo = exec('sh spider_runner.sh', function(){
+				var obj;
+				fs.readFile('../drama_output.json', function(err, data){
+					try {
+						obj = JSON.parse(data);
+						console.log("new update");
+						for (var x=0;x<obj.length; x++){
+							for(var y=0;y<admin.length; y++){
+								bot.sendMessage(admin[y], "New update:+\n"+obj[x].name + " " + obj[x].number);
+								bot.sendMessage(admin[y], obj[x].link);
+							}
+							
+						};
+					}catch(err){
+						for(var y=0;y<admin.length; y++){
+							bot.sendMessage(admin[y], "No new update");
+						}
+					}
+				});
+			});
 		};
 	}
 };

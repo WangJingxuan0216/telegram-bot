@@ -7,6 +7,8 @@ var key = JSON.parse(fs.readFileSync('key.json','utf8'));
 
 token = key.token;
 admin = key.admin;
+my_lord = admin[0];
+my_lady = admin[1];
 
 bot = new TelegramBot(token, {polling: {timeout: 20, interval: 5000}});
 
@@ -35,3 +37,21 @@ bot.on('message', function(msg){
 		bot.onText(/^\/photo (.+)$/, response.sendingPhoto);
 	};
 });
+
+// scheduled job 
+// sending photos 
+var relax = schedule.scheduleJob('*/10 15 14 * * 1-5', function(){
+	console.log("happy time");
+	var path = '/mnt/Media/Photos';
+	var file_list = fs.readdirSync(path);
+	var max = file_list.length;
+	var number = Math.floor(Math.random()*max) + 1;
+	var photo = path+'/'+file_list[number];
+	bot.sendPhoto(my_lord, photo);
+});
+
+// sending Drama info
+var drama = schedule.scheduleJob('0 0 19 * * *', function(){
+	console.log("checking drama update");
+	response.sendingDramaUpdate;
+})
