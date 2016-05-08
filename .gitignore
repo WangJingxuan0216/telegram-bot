@@ -1,5 +1,9 @@
 #file saving token and admin id data
 key.json
+drama_spider.py
+drama_spider.pyc
+spider_runner.sh
+drama_output.json
 
 # node modules
 node_modules/
