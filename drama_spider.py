@@ -24,16 +24,16 @@ class DramaSpider(Spider):
 	"http://www.quanji.la/Zuixinmeiju/JPLMDSJ49413/",
 	"http://www.quanji.la/Zuixinmeiju/SHDBZDJJ48619/",
 	"http://www.quanji.la/Zuixinmeiju/FZXLDSYJ48804/",
-	"http://www.quanji.la/Zuixinmeiju/BYHZGQLDYXDLJ51034/",
+    "http://www.quanji.la/Zuixinmeiju/BYHZGQLDYXDLJ51046/",
 	"http://www.quanji.la/Zuixinmeiju/SGXZDSYJ48857/"
 	]
 
+        print"crawling function is running"
 	def parse(self, response):
 		time_now = datetime.datetime.now()
 		for drama in response.xpath("//div[@class='lm']"):
 			drama_name = DramaItem()
 			drama_name['name'] = drama.xpath("h1/a//text()").extract()[-1].encode('utf-8')
-			drama_name['number'] = drama.xpath("h1/font//text()").extract()[0]
 			drama_name['time'] = drama.xpath('p//text()').extract()[0]
 			last_update_time = datetime.datetime.strptime(drama_name['time'], DATETIME_FORMAT)
 			interval = abs((last_update_time - time_now).total_seconds()/3600)

@@ -121,5 +121,28 @@ module.exports = {
 		}else{
 			bot.sendMessage(chatId, "Hello Stranger, this function hasn't opened to you");
 		};
+	},
+
+	// sending drama update
+	sendingDramaUpdate: function(){
+		console.log("crawling the webpage");
+		var obj;
+		fs.readFile('/home/pi/Program/drama_output.json', function(err, data){
+			try {
+				obj = JSON.parse(data);
+				console.log("new update");
+				for (var x=0;x<obj.length; x++){
+					for(var y=0;y<admin.length; y++){
+						bot.sendMessage(admin[y], "New update:\n"+obj[x].name);
+						bot.sendMessage(admin[y], obj[x].link);
+					}
+				}
+			}catch(err){
+				console.log("no update");
+				for(var y=0;y<admin.length; y++){
+					bot.sendMessage(admin[y], "No new update");
+				}
+			}
+		});
 	}
 };

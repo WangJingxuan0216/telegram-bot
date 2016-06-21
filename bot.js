@@ -36,6 +36,9 @@ bot.on('message', function(msg){
 
 		//sending photos to user
 		bot.onText(/^\/photo (.+)$/, response.sendingPhoto);
+
+		//sending drama update
+		bot.onText(/^\/drama$/, response.sendingDramaUpdate);
 	};
 });
 
@@ -62,7 +65,7 @@ var drama = schedule.scheduleJob('0 0 19 * * *', function(){
 				console.log("new update");
 				for (var x=0;x<obj.length; x++){
 					for(var y=0;y<admin.length; y++){
-						bot.sendMessage(admin[y], "New update:+\n"+obj[x].name + " " + obj[x].number);
+						bot.sendMessage(admin[y], "New update:\n"+obj[x].name);
 						bot.sendMessage(admin[y], obj[x].link);
 					}
 				}
